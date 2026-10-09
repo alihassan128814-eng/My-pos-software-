@@ -1,40 +1,132 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --font-display: 'Bricolage Grotesque', system-ui, -apple-system, sans-serif;
-    --font-body: 'Figtree', system-ui, -apple-system, sans-serif;
-    --font-mono: 'JetBrains Mono', monospace;
-  }
+:root {
+  --bg: #f6f4f0;
+  --panel: #ffffff;
+  --ink: #17191b;
+  --mute: #7a7770;
+  --line: #ebe7e0;
+  --chip: #f1eee8;
+  --red: #b3261e;
+  --redd: #8f1d17;
+  --gold: #c8a24a;
+  --green: #2b6a3d;
+  --amber: #b7791f;
+  --hd: #171c1f;
+  --sh1: 0 1px 2px rgba(23,25,27,.05), 0 4px 14px rgba(23,25,27,.05);
+  --sh2: 0 2px 4px rgba(23,25,27,.06), 0 14px 34px rgba(23,25,27,.10);
+  box-sizing: border-box;
+}
 
-  body {
-    font-family: var(--font-body);
-    color: #17191b;
-    background-color: #f6f4f0;
-  }
+:root[data-theme="dark"] {
+  --bg: #0e1011;
+  --panel: #171a1c;
+  --ink: #f3f1ec;
+  --mute: #9a978f;
+  --line: #272b2d;
+  --chip: #202426;
+  --red: #d9463b;
+  --redd: #b3261e;
+  --gold: #d9b560;
+  --green: #4fa56a;
+  --amber: #e2a23a;
+  --sh1: 0 1px 2px #0006, 0 4px 14px #0004;
+  --sh2: 0 2px 4px #0006, 0 14px 34px #0007;
+}
 
-  h1, h2, h3, h4, .font-display {
-    font-family: var(--font-display);
+* {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.4 'Figtree', system-ui, -apple-system, sans-serif;
+  letter-spacing: .005em;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  height: 100vh;
+  margin: 0;
+}
+
+h1, h2, h3, h4, .disp, .brand, .onum, b {
+  font-family: 'Bricolage Grotesque', 'Figtree', sans-serif;
+  letter-spacing: -.015em;
+}
+
+/* Conic gradient animated spinning logo */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.brand-icon, .eic .logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: conic-gradient(var(--red) 0 25%, #e9b44c 0 50%, var(--red) 0 75%, #e9b44c 0);
+  display: inline-block;
+  animation: spin 8s linear infinite;
+  box-shadow: 0 0 0 2px rgba(200,162,74,.55), 0 4px 12px rgba(0,0,0,.4);
+}
+
+@keyframes logopop {
+  0% { transform: rotate(0) scale(1); }
+  40% { transform: rotate(360deg) scale(1.3); }
+  100% { transform: rotate(720deg) scale(1); }
+}
+
+.brand-icon.hit, .eic .logo.hit {
+  animation: logopop .7s cubic-bezier(.2,.8,.2,1);
+}
+
+@media(prefers-reduced-motion: reduce) {
+  .brand-icon, .eic .logo {
+    animation: none;
   }
 }
 
-/* Custom scrollbars for high-speed POS workflow */
+/* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 6px;
+}
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-::-webkit-scrollbar-thumb {
-  background: rgba(120, 115, 105, 0.25);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(120, 115, 105, 0.4);
+
+/* Tactile button micro-animations */
+button, .mcard, .oc2 {
+  transition: transform .14s cubic-bezier(.2,.8,.2,1), background-color .18s, border-color .18s, box-shadow .18s, color .18s;
 }
 
-/* Thermal receipt print styles */
+button:active:not(:disabled) {
+  transform: scale(.96);
+}
+
+.mcard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.mcard:active {
+  transform: scale(.98);
+}
+
+/* Badge bump pulse */
+@keyframes bump {
+  50% { transform: scale(1.3); }
+}
+
+.bump-badge {
+  animation: bump .25s ease-out;
+}
+
+/* Thermal receipt print format */
 @media print {
   body * {
     visibility: hidden;
@@ -46,12 +138,15 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 78mm !important;
-    max-width: 78mm;
-    margin: 0;
-    padding: 0;
+    width: 76mm !important;
+    max-width: 76mm;
+    margin: 0 !important;
+    padding: 2mm !important;
     background: #ffffff !important;
     color: #000000 !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 }
-
