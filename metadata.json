@@ -1,0 +1,6 @@
+{
+  "name": "My Pizza POS - Artisan Restaurant POS & Kitchen Display",
+  "description": "Professional, high-performance point-of-sale and kitchen management system for artisan pizzerias and restaurants featuring real-time kitchen tracking, inventory control, combo bundles, and live reporting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
