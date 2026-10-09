@@ -58,6 +58,17 @@ async function startServer() {
 
   app.use(express.json({ limit: '10mb' }));
 
+  // Allow CORS for preview iframes and proxy headers
+  app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-pin');
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(200);
+    }
+    next();
+  });
+
   // --- API Endpoints ---
 
   // Health check
@@ -339,7 +350,11 @@ async function startServer() {
   // Mount Vite or serve static files
   if (!isProd) {
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        allowedHosts: true,
+        cors: true,
+      },
       appType: 'spa',
     });
     app.use(vite.middlewares);

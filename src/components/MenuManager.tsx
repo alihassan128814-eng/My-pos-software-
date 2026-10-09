@@ -176,11 +176,7 @@ export const MenuManager: React.FC<MenuManagerProps> = ({
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      if (confirm(`Remove ${item.name} from the active menu?`)) {
-                        onDeleteItem(item.id);
-                      }
-                    }}
+                    onClick={() => onDeleteItem(item.id)}
                     className="p-1.5 rounded-lg border border-rose-200 text-rose-600 hover:bg-rose-50 transition-colors"
                     title="Delete Item"
                   >

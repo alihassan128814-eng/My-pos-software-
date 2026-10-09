@@ -242,13 +242,11 @@ export default function App() {
 
   const handleClearOrder = () => {
     if (cartItems.length === 0) return;
-    if (confirm('Clear the current order ticket?')) {
-      setCartItems([]);
-      setCustomerName('');
-      setCustomerPhone('');
-      setOrderNotes('');
-      setDiscountPercent(0);
-    }
+    setCartItems([]);
+    setCustomerName('');
+    setCustomerPhone('');
+    setOrderNotes('');
+    setDiscountPercent(0);
   };
 
   const handleHoldOrder = async () => {
@@ -320,8 +318,7 @@ export default function App() {
 
       return res.order;
     } catch (err) {
-      console.error('Failed to create order:', err);
-      alert('Could not save order. Please check local connectivity.');
+      console.warn('Failed to create order:', err);
       return null;
     }
   };

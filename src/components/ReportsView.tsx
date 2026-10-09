@@ -84,15 +84,10 @@ export const ReportsView: React.FC<ReportsViewProps> = ({
       try {
         const json = JSON.parse(event.target?.result as string);
         if (json && Array.isArray(json.menu) && Array.isArray(json.orders)) {
-          if (confirm('Restore this backup file? It will replace current in-memory orders and menu.')) {
-            await onRestoreBackup(json);
-            alert('Backup successfully restored!');
-          }
-        } else {
-          alert('Invalid backup JSON format.');
+          await onRestoreBackup(json);
         }
       } catch (err) {
-        alert('Could not parse backup JSON file.');
+        console.warn('Could not parse backup JSON file:', err);
       }
     };
     reader.readAsText(file);
